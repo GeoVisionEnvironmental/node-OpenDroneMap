@@ -42,7 +42,8 @@ module.exports = {
 					// (num cores can be set programmatically, so can gcpFile, etc.)
 					if (["-h", "--project-path", "--cmvs-maxImages", "--time",
 						"--zip-results", "--pmvs-num-cores",
-						"--start-with", "--gcp", "--end-with", "--images", 
+						"--start-with", "--gcp", "--end-with", "--images",
+						"--rerun-all", "--rerun",
 						"--slam-config", "--video", "--version", "--name"].indexOf(option) !== -1) continue;
 
 					let values = json[option];
@@ -53,8 +54,8 @@ module.exports = {
 					let help = values.help || "";
 					let domain = values.metavar !== undefined ? 
 								 values.metavar.replace(/^[<>]/g, "")
-								 				.replace(/[<>]$/g, "")
-							 					.trim() : 
+												.replace(/[<>]$/g, "")
+												.trim() : 
 								 "";
 
 					switch((values.type || "").trim()){
@@ -73,8 +74,8 @@ module.exports = {
 						default:
 							type = "string";
 							value = values['default'] !== undefined ? 
-								    values['default'].trim() :
-								    "";
+									values['default'].trim() :
+									"";
 					}
 
 					if (values['default'] === "True"){
@@ -94,16 +95,20 @@ module.exports = {
 						}	
 					}
 
+					// In the end, all values must be converted back
+					// to strings (per OpenAPI spec which doesn't allow mixed types)
+					value = String(value);
+
 					if (Array.isArray(values.choices)){
 						type = "enum";
 						domain = values.choices;
+
+						// Make sure that the default value
+						// is in the list of choices
+						if (domain.indexOf(value) === -1) domain.unshift(value);
 					}
 
 					help = help.replace(/\%\(default\)s/g, value);
-
-                    // In the end, all values must be converted back
-                    // to strings (per OpenAPI spec which doesn't allow mixed types)
-                    value = String(value);
 
 					odmOptions.push({
 						name, type, value, domain, help
@@ -120,7 +125,7 @@ module.exports = {
 	// @param options[]
 	filterOptions: function(options, done){
 		assert(odmOptions !== null, "odmOptions is not set. Have you initialized odmOptions properly?");
-		
+
 		try{
 			if (typeof options === "string") options = JSON.parse(options);
 			if (!Array.isArray(options)) options = [];

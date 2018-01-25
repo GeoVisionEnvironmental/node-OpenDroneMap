@@ -8,9 +8,7 @@ node-OpenDroneMap is a Node.js App and REST API to access [OpenDroneMap](https:/
 
 ## Getting Started
 
-For a quick taste of the application, we have setup a test environment at [http://nodeodm.masseranolabs.com](http://nodeodm.masseranolabs.com). Please note that **this is not a production environment**, and that processing on this server will be slow (you are sharing the server's resources with everyone else in the world).
-
-If you want to do your own imagery processing, we recommend that you setup your own instance via [Docker](https://www.docker.com/).
+We recommend that you setup node-OpenDroneMap using [Docker](https://www.docker.com/).
 
 * From the Docker Quickstart Terminal (Windows / OSX) or from the command line (Linux) type:
 ```
@@ -29,6 +27,8 @@ Linux users can connect to 127.0.0.1.
 * Load [some images](https://github.com/OpenDroneMap/OpenDroneMap/tree/master/tests/test_data/images)
 * Press "Start Task"
 * Go for a walk :)
+
+If the computer running node-opendronemap is using an old or 32bit CPU, you need to compile OpenDroneMap from sources and setup node-opendronemap natively. You cannot use docker. Docker images work with CPUs with 64-bit extensions, MMX, SSE, SSE2, SSE3 and SSSE3 instruction set support or higher. Seeing a `Illegal instruction` error while processing images is an indication that your CPU is too old. 
 
 ## API Docs
 
