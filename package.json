@@ -8,7 +8,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/pierotofy/node-OpenDroneMap.git"
+    "url": "git+https://github.com/GeoVisionEnvironmental/node-OpenDroneMap.git"
   },
   "keywords": [
     "opendronemap"
@@ -30,6 +30,7 @@
     "morgan": "^1.7.0",
     "multer": "^1.1.0",
     "node-schedule": "^1.1.1",
+    "node-uuid": "^1.4.7",
     "uuid": "",
     "request": "^2.81.0",
     "rimraf": "^2.5.3",
